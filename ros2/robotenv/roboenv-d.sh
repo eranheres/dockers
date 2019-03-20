@@ -3,4 +3,4 @@ if [ -z $1 ]; then
     echo "Home mount folder is required."
     exit 1
 fi
-docker run -d --rm --name=roboenv -p 5901:5901 -p 6901:6901 -v $1:/root/mnt roboenv
+docker run -d --rm --name=roboenv -p 5901:5901 -p 6901:6901 -e VNC_PW=eranh -v $1:/headless/host roboenv

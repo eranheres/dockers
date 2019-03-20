@@ -7,8 +7,11 @@ USER 0
 
 #USER 1000
 
-# Adding keys for ROS
-RUN apt-get update && apt-get install -y wget git nano vim curl lsb-release 
+# Basic command line tools
+RUN apt-get update && apt-get install -y wget git nano curl lsb-release software-properties-common \
+       python-dev python-pip python3-dev python3-pip 
+RUN add-apt-repository ppa:neovim-ppa/stable
+RUN apt-get update && apt-get install -y neovim 
 
 # Installing ROS
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
@@ -28,10 +31,5 @@ RUN apt-get update && apt-get install -y gazebo7 libignition-math2-dev
 
 # setting my personal env setups
 RUN git clone https://github.com/eranheres/vimconfig.git && \
-    cd vimconfig && \
-	/bin/bash -c 'echo "source $(pwd)/vimrc-config" >> ~/.vimrc' && \
-    /bin/bash -c "source setup.sh" && \
-    git clone https://github.com/eranheres/bash_config.git && \ 
-    cd bash_config && \
-    /bin/bash -c 'echo "source $(pwd)/profile" >> ~/.bashrc'
+    cd vimconfig 
 #WORKDIR /root
