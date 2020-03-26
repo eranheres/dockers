@@ -4,10 +4,12 @@ FROM ubuntu:14.04
 
 # setting up all dependencies
 RUN apt-get update && \
-    apt-get install -y curl git software-properties-common python-software-properties && \
+    apt-get install -y curl git software-properties-common \ 
+                       python-software-properties fonts-powerline && \
     add-apt-repository ppa:neovim-ppa/unstable && \
     apt-get update && \
-    apt-get install -y neovim python-dev python-pip python3-dev python3-setuptools && \
+    apt-get install -y neovim python-dev python-pip python3-dev \
+                       python3-setuptools && \
     easy_install3 pip && \
     pip3 install neovim
 

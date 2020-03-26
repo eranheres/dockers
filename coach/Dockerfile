@@ -17,10 +17,32 @@ RUN apt-get update && \
     # Gym
     apt-get install -y libav-tools libsdl2-dev swig cmake  && \
     # others
-    apt-get install -y vim git 
+    apt-get install -y git 
 
 RUN pip3 install virtualenv
 RUN virtualenv -p python3 coach_env
 ENV PATH="/coach_env/bin:${PATH}"
 ENV VIRTUAL_ENV=/coach_env
 RUN pip3 install rl_coach
+
+##### NEOVIM 
+# setting up all dependencies
+RUN apt-get update && \
+    apt-get install -y curl git software-properties-common python-software-properties && \
+    add-apt-repository ppa:neovim-ppa/unstable && \
+    apt-get update && \
+    apt-get install -y neovim python-dev python-pip python3-dev python3-setuptools && \
+    easy_install3 pip && \
+    pip3 install neovim
+RUN bash -c "ln -sf /coach_env/bin/python3 /usr/local/bin/python3"
+RUN bash -c "ln -sf /coach_enf/bin/python /usr/local/bin/python"
+ENV LANG=C.UTF-8
+# setting my personal env setups
+RUN git clone https://github.com/eranheres/vimconfig.git && \
+    cd vimconfig && \
+    /bin/bash -c "./neovim_setup.sh"
+
+###### GIT Config
+RUN git config --global user.email "eran.heres@gmail.com"
+RUN git config --global user.name "Eran Heres"
+
